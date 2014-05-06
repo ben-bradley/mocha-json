@@ -1,0 +1,27 @@
+{
+  "name": "mocha-json",
+  "version": "0.0.1",
+  "description": "A simple mocha wrapper to produce JSON objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "mocha": "1.*.*"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "keywords": [
+    "mocha",
+    "json",
+    "test",
+    "testing"
+  ],
+  "author": "Ben Bradley",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ben-bradley/mocha-json"
+  }
+}
