@@ -3,6 +3,12 @@ mocha-json
 
 A simple wrapper to capture JSON output from Mocha and make it available to code.
 
+Install
+=======
+```
+npm insatll git://github.com/ben-bradley/mocha-json
+```
+
 Example
 =======
 ```javascript
