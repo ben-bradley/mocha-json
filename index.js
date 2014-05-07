@@ -1,28 +1,36 @@
-/*
- * Requires that Mocha be in your PATH
- *
- */
+var fork = require('child_process').fork,
+    fs = require('fs'),
+    path = require('path');
 
-var spawn = require('child_process').spawn;
+module.exports = MochaJSON;
 
-module.exports = function(opts, callback) {
-  var _stdout, _stderr, _this;
+function MochaJSON(options) {
 
-  if (typeof opts == 'string')
-    throw new Error('mocha-json expects array as first argument');
+  this._bin = path.resolve(__dirname+'/node_modules/mocha/bin/mocha');
 
-  // frontload the json reporter options
-  opts.unshift('-R', 'json');
+  this._files = (options && options.files) ?  // if files are specified,
+    options.files :                           // assume the tester knows what they're doing,
+    path.resolve(__dirname+'../../../test');  // else use the standard test dir
 
-  _this = spawn('mocha', opts);
+  this._arguments = [ '-R', 'json' ].concat(this._files);
 
-  _this.stdout.on('data', function(data) { _stdout = (_stdout||'') + data; });
-  
-  _this.stderr.on('data', function(data) { _stderr = (_stderr||'') + data; });
-  
-  _this.on('close', function() {
-    if (_stdout) _stdout = JSON.parse(_stdout);
-    callback(_stderr, _stdout);
+  return this;
+
+};
+
+MochaJSON.prototype.run = function(callback) {
+
+  var mocha = fork(this._bin, this._arguments, { silent: true });
+
+  var logData = function(data) { this.log = (this.log||'') + data; };
+
+  mocha.stdout.on('data', logData);
+  mocha.stderr.on('data', logData);
+
+  mocha.on('close', function() {
+    var stdout = this.stdout.log;
+    if (stdout) stdout = JSON.parse(stdout);
+    callback(this.stderr.log, stdout);
   });
-  
+
 };
