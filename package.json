@@ -7,7 +7,10 @@
     "test": "mocha"
   },
   "dependencies": {
-    "mocha": ">= 1.18.2"
+    "mocha": "visionmedia/mocha"
+  },
+  "engines": {
+    "node": ">= 0.10.x"
   },
   "devDependencies": {
     "mocha": "*"
