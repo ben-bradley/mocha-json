@@ -7,7 +7,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "mocha": "1.*.*"
+    "mocha": ">= 1.18.2"
   },
   "devDependencies": {
     "mocha": "*"
